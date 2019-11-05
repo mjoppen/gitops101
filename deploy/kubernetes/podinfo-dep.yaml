@@ -4,8 +4,15 @@ kind: Deployment
 metadata:
   name: podinfo
 spec:
+  progressDeadlineSeconds: 600
   replicas: 3
-  selector:
+  revisionHistoryLimit: 5
+  strategy:
+    rollingUpdate:
+      ##maxSurge means, how many extra pods may run during the deployment
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdateselector:
     matchLabels:
       app: podinfo
   template:
